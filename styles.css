@@ -39,8 +39,11 @@
 }
 
 .arrow {
+    border: none;
+    background-color: white;
     position: absolute;
     font-size: 3rem;
+    font-weight: normal;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -53,6 +56,7 @@
 }
 .arrow.left {
     left: -40%;
+    /* pointer-events: ; */
 }
 .arrow.right {
     right: -40%;

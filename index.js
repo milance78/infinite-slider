@@ -2,20 +2,6 @@ const sliderElement = document.querySelector('.slider');
 const arrowLeftElement = document.querySelector('.arrow.left');
 const arrowRightElement = document.querySelector('.arrow.right');
 
-
-// let sliderIndex = 0;
-// let isReversed = false;
-const imagesArray = [
-    "https://www.smurf.com/characters-smurfs/papa.png",
-    "https://www.smurf.com/characters-smurfs/handy.png",
-    "https://www.smurf.com/characters-smurfs/smurfette.png",
-    "https://www.smurf.com/characters-smurfs/hefty.png",
-    "https://www.smurf.com/characters-smurfs/brainy.png",
-    "https://www.smurf.com/characters-smurfs/jokey.png",
-    "https://www.smurf.com/characters-smurfs/farmer.png",
-    "https://www.smurf.com/characters-smurfs/gargamel-min.png",
-];
-
 const testArray = [1, 2, 3, 4, 5];
 
 const totalNumberOfSlides = testArray.length;
@@ -37,10 +23,16 @@ const initialSlider = () => {
     }
 }
 const towardsRight = () => {
+    
     sliderElement.style.transition = ".4s ease";
     sliderElement.style.transform = 'translate(-33.33%, 0)';
+    arrowRightElement.disabled = true;
 
     setTimeout(() => {
+       
+        sliderElement.style.transition = "none";
+        sliderElement.style.transform = 'translate(0, 0)';
+
         sliderElement.firstChild.remove();
         const newSlotElement = document.createElement('div');
         newSlotElement.setAttribute('class', 'single-slot');
@@ -58,28 +50,23 @@ const towardsRight = () => {
         } else {
             newSlotIndex = 0
         }
-        newSlotElement.textContent = testArray[newSlotIndex]
-        sliderElement.style.transition = "none";
-        sliderElement.style.transform = 'translate(0, 0)';
-    }, 400);
-
-
-
-    // clearTimeout(slidingRight);
-
+        newSlotElement.textContent = testArray[newSlotIndex];
+        arrowRightElement.disabled = false;
+    }, 400);    
 }
 
-const towardsLeft = () => {
+const towardsLeft = () => {    
     sliderElement.style.transition = ".4s ease";
     sliderElement.style.transform = 'translate(33.33%, 0)';
+    arrowLeftElement.disabled = true;
 
     setTimeout(() => {
+        sliderElement.style.transition = "none";
+        sliderElement.style.transform = 'translate(0, 0)';
 
         sliderElement.lastChild.remove();
         const newSlotElement = document.createElement('div');
         newSlotElement.setAttribute('class', 'single-slot');
-
-
         sliderElement.insertBefore(newSlotElement, sliderElement.firstChild);
         let newSlotIndex;
         // currentSlotNumber adjustment
@@ -94,17 +81,13 @@ const towardsLeft = () => {
         } else {
             newSlotIndex = testArray.length - 1
         }
-        sliderElement.style.transition = "none";
-        sliderElement.style.transform = 'translate(0, 0)';
+
         newSlotElement.textContent = testArray[newSlotIndex]
+        arrowLeftElement.disabled = false;
     }, 400);
 }
 
-
 initialSlider();
-arrowRightElement.addEventListener("click", () => {
-    towardsRight();
-});
-arrowLeftElement.addEventListener("click", () => {
-    towardsLeft();
-});
+
+arrowRightElement.addEventListener("click", towardsRight);
+arrowLeftElement.addEventListener("click", towardsLeft);
